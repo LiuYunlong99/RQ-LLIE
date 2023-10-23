@@ -1,0 +1,82 @@
+#### general settings
+name: LOLv2_Synthetic_S2_D6_wo_alpha
+use_tb_logger: false
+model: FeMaModel
+distortion: sr
+scale: 1
+gpu_ids: [7,8]
+stage: 1
+
+#### datasets
+datasets:
+  train:
+    name: indoor
+    mode: video_samesize_lol3
+    interval_list: [1]
+    random_reverse: false
+    border_mode: false
+    dataroot_GT: /home/liuyunlong/project/dataset/LOL-v2/Synthetic/Train/Normal
+    dataroot_LQ: /home/liuyunlong/project/dataset/LOL-v2/Synthetic/Train/Low
+    train_size: [384, 384]
+    cache_keys: ~
+    cache_data: true
+    padding: new_info
+
+    N_frames: 5     # how many frames as a input.
+    use_shuffle: true
+    n_workers: 3  # per GPU
+    batch_size: 32
+    GT_size: 128     # size you want to crop out as input sample.
+    LQ_size: 128
+    use_flip: true
+    use_rot: true
+    color: RGB
+  val:
+    name: REDS4
+    mode: video_samesize_lol3
+    dataroot_GT: /home/liuyunlong/project/dataset/LOL-v2/Synthetic/Test/Normal
+    dataroot_LQ: /home/liuyunlong/project/dataset/LOL-v2/Synthetic/Test/Low
+    cache_data: true
+    N_frames: 5
+    padding: new_info
+    train_size: [384, 384]
+
+
+#### network structures
+network_G:
+  which_model_G: fema_wo_alpha # fema_mst_v1
+  num_blocks: 3
+  num_code: 6
+
+#### path
+path:
+  root: ./
+  strict_load: false
+  net_hq: ./experiments/LOLv2_Synthetic_S1_D6/models/best_G.pth
+
+#### training settings: learning rate scheme, loss
+train:
+  lr_G: !!float 4e-4
+#  lr_scheme: MultiStepLR
+  lr_scheme: CosineAnnealingLR
+  beta1: 0.9
+  beta2: 0.99
+  niter: 300000
+  ft_tsa_only: 0
+  warmup_iter: -1  # -1: no warm up
+#  lr_steps: [50000, 100000, 200000, 300000]
+#  lr_gamma: 0.5
+  eta_min: !!float 1e-6
+
+  pixel_criterion: cb
+  pixel_weight: 1.0
+  l_pix_reduction: mean
+  val_freq: 100 # !!float 5e3
+
+  manual.resize960x512_seed: 0
+
+#### logger
+logger:
+  print_freq: 100
+  save_checkpoint_freq: !!float 100
+

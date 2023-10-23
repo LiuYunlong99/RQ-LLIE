@@ -1,0 +1,81 @@
+#### general settings
+name: LOLv2Real_S3_D8_4e-4
+use_tb_logger: false
+model: LLIEModel
+distortion: sr
+scale: 1
+gpu_ids: [7,8]
+stage: 2
+
+#### datasets
+datasets:
+  train:
+    name: indoor
+    mode: video_samesize_lol
+    interval_list: [1]
+    random_reverse: false
+    border_mode: false
+    dataroot_GT: /home/liuyunlong/project/dataset/LOL/stage1/Our_normal
+    dataroot_LQ: /home/liuyunlong/project/dataset/LOL/stage1/Our_low
+    train_size: [600, 400]
+    cache_keys: ~
+    cache_data: true
+    padding: new_info
+
+    N_frames: 5     # how many frames as a input.
+    use_shuffle: true
+    n_workers: 4  # per GPU
+    batch_size: 32  # 32
+    GT_size: 128     # size you want to crop out as input sample.
+    LQ_size: 128
+    use_flip: true
+    use_rot: true
+    color: RGB
+  val:
+    name: REDS4
+    mode: video_samesize_lol
+    dataroot_GT: /home/liuyunlong/project/dataset/LOL/stage1/Our_normal_test
+    dataroot_LQ: /home/liuyunlong/project/dataset/LOL/stage1/Our_low_test
+    cache_data: true
+    N_frames: 5
+    padding: new_info
+    train_size: [600, 400]
+
+
+#### network structures
+network_G:
+  which_model_G: RQ_LLIE # fema_mst_v1
+  num_code: 8
+
+#### path
+path:
+  root: ./
+  strict_load: false
+#  net_hq: /home/liuyunlong/project/code/SNR-Aware-Low-Light-Enhance-main/experiments/femaV1_64_3_S2_W1/models/165000_G.pth
+  pretrained_model: ./experiments/LOLv2Real_S2_D8/models/best_G.pth
+
+#### training settings: learning rate scheme, loss
+train:
+  lr_G: !!float 4e-4
+  #  lr_scheme: MultiStepLR
+  lr_scheme: CosineAnnealingLR # CosineAnnealingLR
+  beta1: 0.9
+  beta2: 0.99
+  niter: 50000
+  ft_tsa_only: 0
+  warmup_iter: -1  # -1: no warm up
+  #  lr_steps: [50000, 100000, 200000, 300000]
+  #  lr_gamma: 0.5
+  eta_min: !!float 5e-5
+
+  pixel_criterion: cb
+  pixel_weight: 1.0
+  l_pix_reduction: mean
+  val_freq: 100 # !!float 5e3
+
+  manual.resize960x512_seed: 0
+
+#### logger
+logger:
+  print_freq: 100
+  save_checkpoint_freq: 100

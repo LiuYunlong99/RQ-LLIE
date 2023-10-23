@@ -1,0 +1,32 @@
+### must be same as 
+
+name: LOLv2Synthetic_Ours
+suffix: ~  # add suffix to saved images
+model: LLIE_Model
+distortion: sr
+scale: 1
+crop_border: ~  # crop border when evaluation. If None(~), crop the scale pixels
+gpu_ids: [0]
+stage: 2
+
+datasets:
+  test:  # the 1st test dataset
+    name: test
+    mode: video_samesize_lol3
+    dataroot_GT: /home/liuyunlong/project/dataset/LOL-v2/Synthetic/Test/Normal
+    dataroot_LQ: /home/liuyunlong/project/dataset/LOL-v2/Synthetic/Test/Low
+    train_size: [384, 384]
+    cache_data: true
+    N_frames: 5
+    padding: new_info
+
+
+#### network structures
+network_G:
+  which_model_G: RQ_LLIE # fema_mst_p_v3 # low_light_transformer
+  num_code: 6
+
+#### path
+path:
+  root: ./
+  pretrained_model: ./pretrained_models/LOLv2Synthetic.pth

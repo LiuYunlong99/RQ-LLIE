@@ -1,0 +1,32 @@
+### must be same as 
+
+name: LOLv1_S3
+suffix: ~  # add suffix to saved images
+model: LLIE_Model
+distortion: sr
+scale: 1
+crop_border: ~  # crop border when evaluation. If None(~), crop the scale pixels
+gpu_ids: [6,]
+stage: 2  # [0, 1, 2]
+
+datasets:
+  test:  # the 1st test dataset
+    name: test
+    mode: video_samesize_lol
+    dataroot_GT: /home/liuyunlong/project/dataset/LOLv1/eval15/high
+    dataroot_LQ: /home/liuyunlong/project/dataset/LOLv1/eval15/low
+    train_size: [600, 400]
+    cache_data: true
+    N_frames: 5
+    padding: new_info
+
+#### network structures
+network_G:
+  which_model_G: RQ_LLIE # fema_mst_p_v3 # low_light_transformer
+  num_code: 8
+
+#### path
+path:
+  root: ./
+  pretrained_model: ./pretrained_models/LOLv1.pth # LOLv1.pth
+
