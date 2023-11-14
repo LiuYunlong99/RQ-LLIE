@@ -44,7 +44,7 @@ python test_LOLv2_synthetic.py -opt options/test/LOLv2_synthetic.yml
 Note you need to change the **dataroot_GT** and **dataroot_LQ** to your path in the option file.
 
 ### Training
-Train the model on the corresponding dataset using the train config. For example, the training on indoor subset of LOLv1:
+Train the model on the corresponding dataset using the train config. For example, the training on LOLv1:
 ```
 python -m torch.distributed.launch --nproc_per_node 1 --master_port 4320 train.py -opt options/train/LOLv1.yml --launcher pytorch
 ```
