@@ -52,7 +52,7 @@ python -m torch.distributed.launch --nproc_per_node 1 --master_port 4320 train.p
 ## Acknowledgements
 This source code is inspired by [SNR(CVPR22)](https://github.com/dvlab-research/SNR-Aware-Low-Light-Enhance).
 
-### Citation Information
+## Citation Information
 If you find our work useful for your research, please consider giving this project a star and citing the following papers :)
 
 ```
