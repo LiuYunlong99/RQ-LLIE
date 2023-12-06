@@ -355,7 +355,7 @@ def main():
                 if rank <= 0:
                     logger.info('Saving models and training states.')
                     model.save('latest')
-                    model.save_training_state(epoch, current_step,'latest')
+                    model.save_training_state(epoch, 'latest')
                     if psnr_total_avg >= best_psnr:
                         model.save('best')
                         model.save_training_state(epoch, current_step,'best')
