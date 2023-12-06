@@ -184,14 +184,14 @@ class Network(nn.Module):
         f1, f2, f3 = self.encode(x)
         fq, codebook_loss, distance_map = self.vq_64(f3)
         f1_d, f2_d, f3_d = self.decode(fq)
-        x_rec = self.conv_out(f3_d)
+        x_rec = self.conv_out(f1_d)
         return x_rec, codebook_loss, distance_map, [f1, f2, f3]
 
     def forward_s2(self, x):
         f1, f2, f3 = self.encode(x)
         fq, distance_map = self.vq_64.forward_with_query(f3, self.query)
         f1_d, f2_d, f3_d = self.decode(fq)
-        x_rec = self.conv_out(f3_d)
+        x_rec = self.conv_out(f1_d)
         return x_rec, distance_map, [f1, f2, f3]
 
     def forward_s3(self, x):
