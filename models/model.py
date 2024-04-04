@@ -137,8 +137,8 @@ class LLIEModel(BaseModel):
             loss_bottle = 0
             for bottle, bottle_gt in zip(bottle_list, bottle_list_gt):
                 loss_bottle += F.l1_loss(bottle, bottle_gt)
-            l_final = 0 * loss_alpha + loss_bottle
-            self.log_dict['l_alpha'] = 0
+            l_final = loss_alpha + loss_bottle
+            self.log_dict['l_alpha'] = loss_alpha.item()
             self.log_dict['l_bottle'] = loss_bottle.item()
             l_pix = torch.zeros_like(l_final)
         elif self.stage == 2:
