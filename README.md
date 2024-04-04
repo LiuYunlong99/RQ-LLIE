@@ -3,6 +3,7 @@
 This repository contains the Pytorch codes for paper **Low-Light Image Enhancement with Multi-stage Residue Quantization and Brightness-aware Attention (ICCV (2023))**. 
 [[paper]](https://openaccess.thecvf.com/content/ICCV2023/papers/Liu_Low-Light_Image_Enhancement_with_Multi-Stage_Residue_Quantization_and_Brightness-Aware_Attention_ICCV_2023_paper.pdf)
 ---
+
 ## Overview
 In this paper, we propose a brightness-aware network with normal-light priors based on brightness-aware attention and residualquantized codebook. To achieve a more natural and realistic enhancement, we design a query module to obtain more reliable normal-light features and fuse them with lowlight features by a fusion branch. In addition, we propose a brightness-aware attention module to further improve the robustness of the network to the brightness. Extensive experimental results on both real-captured and synthetic data show that our method outperforms existing state-of-the-art methods.
 ![introduction image](./figures/introduction.png)
@@ -10,6 +11,9 @@ In this paper, we propose a brightness-aware network with normal-light priors ba
 ## Architecture
 ![Atchitecture image](./figures/structure.png)
 Figure 2: Architectures of the proposed three-stage framework for low-light image enhancement.
+
+## Results
+Results on LOLv1, LOLv2-real and LOLv2-synthetic dataset can be downloaded from [[Google Drive]](https://drive.google.com/drive/folders/1q1EK39rnSyPEHqe1-aAdd4sZxjXDUzPO?usp=drive_link)
 
 ## Usage
 ### Download the RQ-LLIE repository
@@ -28,7 +32,6 @@ LOLv1: [[Google Drive]](https://drive.google.com/drive/folders/1ncC-XWo9Fag8LfQ8
 LOLv2: [[Google Drive]](https://drive.google.com/drive/folders/11LW6jLvGHShnQIcQ_wxnUwg9oRKtmARj?usp=sharing)
 
 ### Evaluation
-
 Download the pretrained models from [[Google Drive]](https://drive.google.com/drive/folders/1mFBjwejx1qlvILfiyzl1MQb4RjKAqyhx?usp=drive_link). And put them in the folder ___./pretrained_models___ .
 
 ```
